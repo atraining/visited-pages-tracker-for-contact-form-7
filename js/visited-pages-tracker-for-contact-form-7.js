@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // console.log("DOMContentLoaded event fired");
 
     var pageUrl = window.location.href;
-    var visitedPages = JSON.parse(localStorage.getItem('visited_pages')) || [];
+    var visitedPages = JSON.parse(sessionStorage.getItem('visited_pages')) || [];
 
     // console.log("Current page URL:", pageUrl);
     // console.log("Visited pages before update:", visitedPages);
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // console.log("Visited pages after update:", visitedPages);
 
     // saving visited_pages to localStorage
-    localStorage.setItem('visited_pages', JSON.stringify(visitedPages));
+    sesstionStorage.setItem('visited_pages', JSON.stringify(visitedPages));
     // console.log("Visited pages saved to localStorage");
 
     // adding visited_pages to the form data before submit event is fired
