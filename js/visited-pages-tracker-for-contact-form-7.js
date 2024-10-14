@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // console.log("Visited pages after update:", visitedPages);
 
     // saving visited_pages to sessionStorage
-    sesstionStorage.setItem('visited_pages', JSON.stringify(visitedPages));
+    sessionStorage.setItem('visited_pages', JSON.stringify(visitedPages));
     // console.log("Visited pages saved to sessionStorage");
 
     // adding visited_pages to the form data before submit event is fired
