@@ -15,7 +15,7 @@ Track and display visited pages in your Contact Form 7 submissions to gain actio
 Contact Form 7 Visited Pages Tracker is a WordPress plugin that enhances the Contact Form 7 plugin by tracking the pages a user has visited before submitting the form. This information is then included in the form submission email, allowing you to see which pages the user viewed before submitting the form.
 
 Key features:
-* Track the URLs of visited pages using localStorage.
+* Track the URLs of visited pages using sessionStorage.
 * Automatically include the visited pages in the Contact Form 7 form submissions.
 * Simple setup - just activate the plugin, add shortcode [visited-pages] it works with all your Contact Form 7 forms.
 * Utilizes user browser data, leading to a simple, lightweight design that places minimal load on server performance.
