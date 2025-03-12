@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // console.log("DOMContentLoaded event fired");
-
-    var pageUrl = window.location.href;
-    var visitedPages = JSON.parse(sessionStorage.getItem('visited_pages')) || [];
-
-    // console.log("Current page URL:", pageUrl);
-    // console.log("Visited pages before update:", visitedPages);
+    // Retrieve visited pages from session storage
+    let visitedPages = JSON.parse(sessionStorage.getItem('visited_pages')) || [];
+    // use the last page the user came from
+    const pageUrl = document.referrer;
+    // console.log('Added last page:', pageUrl);
 
     // adding the current page URL to visited_pages
     if (!visitedPages.includes(pageUrl)) {
@@ -16,23 +14,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // saving visited_pages to sessionStorage
     sessionStorage.setItem('visited_pages', JSON.stringify(visitedPages));
-    // console.log("Visited pages saved to sessionStorage");
 
-    // adding visited_pages to the form data before submit event is fired
+    // Attach event listeners to all Contact Form 7 forms
     document.querySelectorAll('form.wpcf7-form').forEach(function(form) {
-        // console.log("Found form:", form);
-        form.addEventListener('submit', function() {
-            // console.log("Form submit event fired");
-            var visitedPages = sessionStorage.getItem('visited_pages');
-            // console.log("Visited pages from sessionStorage:", visitedPages);
-
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'visited_pages';
-            input.value = visitedPages;
-            form.appendChild(input);
-
-            // console.log("Hidden input added:", input);
+        // Flag to check if we've already filled the hidden input
+        let isInputFilled = false;
+        // Fill in the URL as soon the user starts editing it
+        form.querySelectorAll('input, textarea, select').forEach(function(field) {
+            field.addEventListener('focus', function() {
+                // add the current page
+                visitedPages.push(window.location.href);
+                sessionStorage.setItem('visited_pages', JSON.stringify(visitedPages));
+                if (!isInputFilled) {
+                    const hiddenInput = form.querySelector('input[name="visited_pages"]');
+                    if (hiddenInput) {
+                        // Set the value with collected visited pages as a JSON string
+                        hiddenInput.value = JSON.stringify(visitedPages);
+                        console.log('Hidden input filled with visited pages on focus:', hiddenInput.value);
+                        isInputFilled = true; // Prevent multiple fillings
+                    }
+                }
+            });
         });
     });
 });
