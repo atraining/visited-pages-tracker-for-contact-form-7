@@ -44,3 +44,11 @@ function vptcf7_enqueue_script() {
     wp_enqueue_script('contact-form-7-page-tracker', plugin_dir_url(__FILE__) . 'js/visited-pages-tracker-for-contact-form-7.js', [], '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'vptcf7_enqueue_script');
+
+// Create hidden field in any contact form
+add_filter('wpcf7_form_elements', 'add_hidden_visited_pages_field');
+function add_hidden_visited_pages_field($form) {
+    $visited_pages_json = isset($_POST['visited_pages']) ? wp_unslash($_POST['visited_pages']) : '';
+    $hidden_field = '<input type="hidden" name="visited_pages" value="" />';
+    return $form . $hidden_field;
+}
